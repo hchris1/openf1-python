@@ -1,17 +1,17 @@
 import requests
-from openf1.driver import Driver
-from openf1.car_data import CarData
-from openf1.interval import Interval
-from openf1.lap import Lap
-from openf1.location import Location
-from openf1.meeting import Meeting
-from openf1.pit import Pit
-from openf1.position import Position
-from openf1.race_control import RaceControl
-from openf1.session import Session
-from openf1.stint import Stint
-from openf1.team_radio import TeamRadio
-from openf1.weather import Weather
+from openf1.models.driver import Driver
+from openf1.models.car_data import CarData
+from openf1.models.interval import Interval
+from openf1.models.lap import Lap
+from openf1.models.location import Location
+from openf1.models.meeting import Meeting
+from openf1.models.pit import Pit
+from openf1.models.position import Position
+from openf1.models.race_control import RaceControl
+from openf1.models.session import Session
+from openf1.models.stint import Stint
+from openf1.models.team_radio import TeamRadio
+from openf1.models.weather import Weather
 
 
 class OpenF1Client:
