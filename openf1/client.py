@@ -8,6 +8,10 @@ from openf1.meeting import Meeting
 from openf1.pit import Pit
 from openf1.position import Position
 from openf1.race_control import RaceControl
+from openf1.session import Session
+from openf1.stint import Stint
+from openf1.team_radio import TeamRadio
+from openf1.weather import Weather
 
 
 class OpenF1Client:
@@ -188,3 +192,87 @@ class OpenF1Client:
 
         response = requests.get(url)
         return [RaceControl(**race_control) for race_control in response.json()]
+
+    def get_sessions(
+        self,
+        circuit_key: int = None,
+        circuit_short_name: str = None,
+        country_code: str = None,
+        country_key: int = None,
+        country_name: str = None,
+        meeting_key: int = None,
+        session_key: int = None,
+        session_name: str = None,
+        session_type: str = None,
+        year: int = None,
+    ) -> list[Session]:
+        url = f"{self.base_url}/sessions"
+        params = {
+            "circuit_key": circuit_key,
+            "circuit_short_name": circuit_short_name,
+            "country_code": country_code,
+            "country_key": country_key,
+            "country_name": country_name,
+            "meeting_key": meeting_key,
+            "session_key": session_key,
+            "session_name": session_name,
+            "session_type": session_type,
+            "year": year,
+        }
+        url += "?" + "&".join([f"{k}={v}" for k, v in params.items() if v is not None])
+
+        response = requests.get(url)
+        return [Session(**session) for session in response.json()]
+
+    def get_stints(
+        self,
+        compound: str = None,
+        driver_number: int = None,
+        meeting_key: int = None,
+        session_key: int = None,
+        stint_number: int = None,
+    ) -> list[Stint]:
+        url = f"{self.base_url}/stints"
+        params = {
+            "compound": compound,
+            "driver_number": driver_number,
+            "meeting_key": meeting_key,
+            "session_key": session_key,
+            "stint_number": stint_number,
+        }
+        url += "?" + "&".join([f"{k}={v}" for k, v in params.items() if v is not None])
+
+        response = requests.get(url)
+        return [Stint(**stint) for stint in response.json()]
+
+    def get_team_radios(
+        self,
+        driver_number: int = None,
+        meeting_key: int = None,
+        session_key: int = None,
+    ) -> list[TeamRadio]:
+        url = f"{self.base_url}/team_radio"
+        params = {
+            "driver_number": driver_number,
+            "meeting_key": meeting_key,
+            "session_key": session_key,
+        }
+        url += "?" + "&".join([f"{k}={v}" for k, v in params.items() if v is not None])
+
+        response = requests.get(url)
+        return [TeamRadio(**team_radio) for team_radio in response.json()]
+
+    def get_weather(
+        self,
+        meeting_key: int = None,
+        session_key: int = None,
+    ) -> list[Weather]:
+        url = f"{self.base_url}/weather"
+        params = {
+            "meeting_key": meeting_key,
+            "session_key": session_key,
+        }
+        url += "?" + "&".join([f"{k}={v}" for k, v in params.items() if v is not None])
+
+        response = requests.get(url)
+        return [Weather(**weather) for weather in response.json()]
